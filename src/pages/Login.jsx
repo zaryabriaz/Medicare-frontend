@@ -24,16 +24,18 @@ export const Login = () => {
     setLoading(true)
 
     try {
-      console.log('Attempting login to:', `${BASE_URL}/auth/login`)
+      const loginUrl = `${BASE_URL}/auth/login`
+      console.log('Attempting login to:', loginUrl)
       
-      const res = await fetch(`${BASE_URL}/auth/login`, {
-        method: 'post',
+      const res = await fetch(loginUrl, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
         body: JSON.stringify(formData),
-        credentials: 'include'
+        credentials: 'include',
+        mode: 'cors'
       })
       
       console.log('Login response status:', res.status)
