@@ -26,7 +26,7 @@ const SidePanel = ({ doctorId, ticketPrice, timeSlots }) => {
             console.log('Starting booking process for doctor:', doctorId)
             console.log('User token:', token ? 'Present' : 'Missing')
 
-            const res = await fetch(`${BASE_URL}/bookings/checkout-session/${doctorId}`, {
+            const res = await fetch(`${BASE_URL}/bookings/checkout-success/${doctorId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -39,18 +39,18 @@ const SidePanel = ({ doctorId, ticketPrice, timeSlots }) => {
             console.log('Booking response:', data)
 
             if (!res.ok) {
-                throw new Error(data.message || 'Please try again')
+                throw new Error(data.message || data.error || 'Failed to create checkout session')
             }
 
-            if (data.session?.url) {
-                window.location.href = data.session.url
-            } else {
-                throw new Error('No checkout URL received')
+            if (!data.session?.url) {
+                throw new Error('No checkout URL received from server')
             }
+
+            window.location.href = data.session.url
 
         } catch (err) {
             console.error('Booking error:', err)
-            toast.error(err.message || 'Failed to book appointment')
+            toast.error(err.message || 'Failed to book appointment. Please try again later.')
         }
     }
 
