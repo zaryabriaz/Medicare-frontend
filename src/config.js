@@ -1,10 +1,10 @@
 // Determine if we're in development or production
 const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
-// Set the base URL based on the environment
-export const BASE_URL = isDevelopment 
-  ? '/api/v1'  // In development, use the proxy path
-  : 'https://medicare-backend-production-0b0c.up.railway.app/api/v1'  // In production, use the full URL
+// In production, use the full URL, in development use the proxy path
+export const BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? '/api/v1'
+  : 'https://medicare-backend-production-0b0c.up.railway.app/api/v1'
 
 // Debug logs
 console.log('Current hostname:', window.location.hostname)
