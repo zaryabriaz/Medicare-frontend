@@ -25,8 +25,13 @@ const SidePanel = ({ doctorId, ticketPrice, timeSlots }) => {
 
             console.log('Starting booking process for doctor:', doctorId)
             console.log('User token:', token ? 'Present' : 'Missing')
+            console.log('BASE_URL:', BASE_URL)
 
-            const res = await fetch(`${BASE_URL}/bookings/checkout-success/${doctorId}`, {
+            // Ensure the URL is correct
+            const apiUrl = `${BASE_URL}/bookings/checkout-session/${doctorId}`
+            console.log('Making request to:', apiUrl)
+
+            const res = await fetch(apiUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -35,21 +40,43 @@ const SidePanel = ({ doctorId, ticketPrice, timeSlots }) => {
                 credentials: 'include'
             })
 
-            const data = await res.json()
-            console.log('Booking response:', data)
+            // Log the raw response for debugging
+            const responseText = await res.text()
+            console.log('Raw response:', responseText)
+
+            let data
+            try {
+                data = JSON.parse(responseText)
+            } catch (parseError) {
+                console.error('Failed to parse response as JSON:', parseError)
+                throw new Error('Invalid response from server')
+            }
+
+            console.log('Full booking response:', data)
 
             if (!res.ok) {
+                console.error('Server error response:', {
+                    status: res.status,
+                    statusText: res.statusText,
+                    data: data
+                })
                 throw new Error(data.message || data.error || 'Failed to create checkout session')
             }
 
             if (!data.session?.url) {
+                console.error('No session URL in response:', data)
                 throw new Error('No checkout URL received from server')
             }
 
+            console.log('Redirecting to checkout URL:', data.session.url)
             window.location.href = data.session.url
 
         } catch (err) {
-            console.error('Booking error:', err)
+            console.error('Detailed booking error:', {
+                message: err.message,
+                stack: err.stack,
+                name: err.name
+            })
             toast.error(err.message || 'Failed to book appointment. Please try again later.')
         }
     }
