@@ -24,7 +24,10 @@ export const Login = () => {
     setLoading(true)
 
     try {
-      const res = await fetch(`${BASE_URL}/auth/login`, {
+      const loginUrl = `${BASE_URL}/auth/login`
+      console.log('Attempting login to:', loginUrl)
+      
+      const res = await fetch(loginUrl, {
         method: 'post',
         headers: {
           'Content-Type': 'application/json'
@@ -32,14 +35,14 @@ export const Login = () => {
         body: JSON.stringify(formData),
         credentials: 'include'
       })
+      
+      console.log('Login response status:', res.status)
       const result = await res.json()
+      console.log('Login response:', result)
+      
       if (!res.ok) {
         throw new Error(result.message)
       }
-      
-      console.log('Full login response:', result)
-      console.log('User data:', result.data)
-      console.log('User photo:', result.data.photo)
       
       dispatch({
         type: "LOGIN_SUCCESS",
@@ -50,11 +53,11 @@ export const Login = () => {
         },
       })
 
-      console.log(result, "login data")
       setLoading(false)
       toast.success(result.message)
       navigate('/home')
     } catch (err) {
+      console.error('Login error:', err)
       toast.error(err.message)
       setLoading(false)
     }
