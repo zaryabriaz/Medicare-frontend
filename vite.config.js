@@ -1,12 +1,19 @@
-export const BASE_URL = 'https://medicare-backend-production-0b0c.up.railway.app/api/v1'
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
-export const getToken = () => {
-    const token = localStorage.getItem('token')
-    if (!token) return null
-    return token
-}
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    proxy: {
+      '/api': {
+        target: process.env.VITE_API_URL || 'http://localhost:5000',
+        changeOrigin: true,
+        secure: false
+      }
+    }
+  },
+  define: {
+    'process.env.VITE_API_URL': JSON.stringify(process.env.VITE_API_URL)
+  }
+})
 
-export const getAuthHeader = () => {
-    const token = getToken()
-    return token ? { Authorization: `Bearer ${token}` } : {}
-}
