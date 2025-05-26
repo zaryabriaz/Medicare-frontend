@@ -15,6 +15,8 @@ export const DoctorDetails = () => {
 
   const [tab, setTab] = useState('about')
   const {id} = useParams();
+  
+  console.log('Fetching doctor details from:', `${BASE_URL}/doctors/${id}`)
   const {data: doctor, loading, error} = useFetchData(`${BASE_URL}/doctors/${id}`)
 
   const {

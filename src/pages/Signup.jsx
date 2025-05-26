@@ -41,15 +41,21 @@ export const Signup = () => {
     setLoading(true)
 
     try {
+      console.log('Attempting signup to:', `${BASE_URL}/auth/register`)
+      
       const res = await fetch(`${BASE_URL}/auth/register`, {
         method: 'post',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         body: JSON.stringify(formData),
         credentials: 'include'
       })
+      
+      console.log('Signup response status:', res.status)
       const { message } = await res.json()
+      
       if (!res.ok) {
         throw new Error(message)
       }
@@ -58,6 +64,7 @@ export const Signup = () => {
       toast.success(message)
       navigate('/login')
     } catch (err) {
+      console.error('Signup error:', err)
       toast.error(err.message)
       setLoading(false)
     }

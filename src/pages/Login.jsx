@@ -24,13 +24,13 @@ export const Login = () => {
     setLoading(true)
 
     try {
-      const loginUrl = `${BASE_URL}/auth/login`
-      console.log('Attempting login to:', loginUrl)
+      console.log('Attempting login to:', `${BASE_URL}/auth/login`)
       
-      const res = await fetch(loginUrl, {
+      const res = await fetch(`${BASE_URL}/auth/login`, {
         method: 'post',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         body: JSON.stringify(formData),
         credentials: 'include'

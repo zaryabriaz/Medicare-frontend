@@ -23,6 +23,7 @@ export const useFetchData = (url) => {
 
                 const headers = {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                     ...(token ? { Authorization: `Bearer ${token}` } : {})
                 }
                 console.log('Request headers:', headers)

@@ -1,11 +1,15 @@
-// In development, use the proxy path, in production use the full URL
-export const BASE_URL = import.meta.env.PROD 
-  ? 'https://medicare-backend-production-0b0c.up.railway.app/api/v1'
-  : '/api/v1'
+// Determine if we're in development or production
+const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
-// Add a debug log to verify the URL being used
-console.log('Current BASE_URL:', BASE_URL)
-console.log('Environment:', import.meta.env.PROD ? 'Production' : 'Development')
+// Set the base URL based on the environment
+export const BASE_URL = isDevelopment 
+  ? '/api/v1'  // In development, use the proxy path
+  : 'https://medicare-backend-production-0b0c.up.railway.app/api/v1'  // In production, use the full URL
+
+// Debug logs
+console.log('Current hostname:', window.location.hostname)
+console.log('Is development:', isDevelopment)
+console.log('Using BASE_URL:', BASE_URL)
 
 export const getToken = () => {
     const token = localStorage.getItem('token')
