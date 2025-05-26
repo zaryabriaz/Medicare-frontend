@@ -1,4 +1,7 @@
-export const BASE_URL = import.meta.env.VITE_API_URL || '/api/v1'
+// In development, use the proxy path, in production use the full URL
+export const BASE_URL = import.meta.env.PROD 
+  ? 'https://medicare-backend-production-0b0c.up.railway.app/api/v1'
+  : '/api/v1'
 
 export const getToken = () => {
     const token = localStorage.getItem('token')
