@@ -1,4 +1,4 @@
-import  './app.css';
+import './App.css';
 import Layout from './layout/Layout';
 
 function App() {
@@ -8,4 +8,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
