@@ -1,15 +1,12 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+export const BASE_URL = import.meta.env.VITE_API_URL || '/api/v1'
 
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:5000',
-        changeOrigin: true,
-        secure: false
-      }
-    }
-  }
-})
+export const getToken = () => {
+    const token = localStorage.getItem('token')
+    if (!token) return null
+    return token
+}
+
+export const getAuthHeader = () => {
+    const token = getToken()
+    return token ? { Authorization: `Bearer ${token}` } : {}
+}
