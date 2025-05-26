@@ -1,4 +1,4 @@
-export const BASE_URL = import.meta.env.VITE_API_URL || '/api/v1'
+export const BASE_URL = 'https://medicare-backend-production-0b0c.up.railway.app/api/v1'
 
 export const getToken = () => {
     const token = localStorage.getItem('token')
