@@ -31,7 +31,8 @@ export const useFetchData = (url) => {
                 const res = await fetch(url, { 
                     method: 'GET',
                     headers,
-                    credentials: 'include'
+                    credentials: 'include',
+                    mode: 'cors'
                 })
                 console.log('Response status:', res.status)
 
