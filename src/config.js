@@ -1,5 +1,5 @@
 // Production backend URL
-const API_URL = 'https://medicare-backend-production-0b0c.up.railway.app'
+const API_URL = 'https://exciting-learning-production.up.railway.app'
 
 // Base URL for all API requests
 export const BASE_URL = `${API_URL}/api/v1`
