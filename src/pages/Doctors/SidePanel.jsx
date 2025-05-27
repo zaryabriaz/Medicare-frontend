@@ -32,12 +32,10 @@ const SidePanel = ({ doctorId, ticketPrice, timeSlots }) => {
             console.log('Making request to:', apiUrl)
 
             const res = await fetch(apiUrl, {
-                method: 'POST',
+                method: 'post',
                 headers: {
-                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
-                },
-                credentials: 'include'
+                }
             })
 
             // Log the raw response for debugging
